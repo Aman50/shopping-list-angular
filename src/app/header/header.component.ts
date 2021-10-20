@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output()
+  tabIndexSelected: EventEmitter<number> = new EventEmitter<number>();
+
+  activeTabIndex: number;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  selectedTab(tabIndex: number): void {
+    this.activeTabIndex = tabIndex;
+    this.tabIndexSelected.emit(this.activeTabIndex);
   }
 
 }
