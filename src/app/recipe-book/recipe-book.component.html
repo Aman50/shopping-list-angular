@@ -4,10 +4,7 @@
             <app-recipe-list></app-recipe-list>
         </div>
         <div class="col-md-5">
-            <app-recipe-detail *ngIf="activeRecipe; else noRecipe" [recipe]="activeRecipe"></app-recipe-detail>
-            <ng-template #noRecipe>
-                <p>Please select a recipe!</p>
-            </ng-template>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

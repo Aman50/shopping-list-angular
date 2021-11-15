@@ -32,6 +32,10 @@ export class RecipeService {
         return this.recipes.slice();
     }
 
+    fetchRecipeWithId(id: number) {
+      return JSON.parse(JSON.stringify(this.recipes[id]));
+    }
+
     addIngredientsToShoppingList(ingredients: Ingredient[]) {
         this.shoppingListService.addIngredients(ingredients);
     }
