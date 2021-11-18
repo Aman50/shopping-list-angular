@@ -1,3 +1,6 @@
+navbar-brand {
+    text-decoration: none;
+}
 .activetab {
-    color: black;
+    color: red;
 }

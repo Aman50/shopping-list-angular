@@ -2,28 +2,28 @@
     <div class="continer-fluid">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a href="#">RecipeShopping</a>
+                <a style="cursor: pointer;">RecipeShopping</a>
             </div>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="#" (click)="selectedTab(0)" [ngClass]="{activetab: activeTabIndex === 0}">
+                <li routerLinkActive="active">
+                    <a [routerLink]="['/recipe-book']">
                         Recipes
                     </a>
                 </li>
-                <li>
-                    <a href="#" (click)="selectedTab(1)" [ngClass]="{activetab: activeTabIndex === 1}">
+                <li routerLinkActive="active">
+                    <a [routerLink]="['/shopping-list']">
                         Shopping List
                     </a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" appDropdown>
-                    <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+                    <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Save Data</a></li>
-                        <li><a href="#">Fetch Data</a></li>
+                        <li><a style="cursor: pointer;">Save Data</a></li>
+                        <li><a style="cursor: pointer;">Fetch Data</a></li>
                     </ul>
                 </li>
             </ul>
