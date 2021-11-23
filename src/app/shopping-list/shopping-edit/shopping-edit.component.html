@@ -1,21 +1,23 @@
 <div class="row">
     <div class="col-xs-12">
-        <form>
+        <form #shoppingForm="ngForm" (ngSubmit)="submitForm(shoppingForm)">
             <div class="row">
                 <div class="col-xs-5 form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" class="form-control" #nameInput>
+                    <input type="text" id="name" class="form-control" ngModel name="name" required>
                 </div>
                 <div class="col-xs-2 form-group">
                     <label for="amount">Amount</label>
-                    <input type="number" id="amount" class="form-control" #amountInput>
+                    <input type="number" id="amount" class="form-control" [ngModel]="'1'" name="amount" required min="1">
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-success" type="submit" (click)="addIngredient(nameInput.value, amountInput.value)">Add</button>
-                    <button class="btn btn-danger" type="button">Delete</button>
-                    <button class="btn btn-primary" type="button">Clear</button>
+                    <button class="btn btn-success" type="submit" [disabled]="shoppingForm.invalid">
+                        {{mode === 'edit' ? 'Update': 'Add' }}
+                    </button>
+                    <button *ngIf="mode === 'edit'" class="btn btn-danger" type="button" (click)="onDelete()">Delete</button>
+                    <button class="btn btn-primary" type="button" (click)="resetForm()">Clear</button>
                 </div>
             </div>
         </form>

@@ -13,7 +13,6 @@ export class DropdownDirective {
     // }
 
     @HostListener('document:click', ['$event']) onClick(event: Event) {
-        console.log(this.elementRef.nativeElement);
         if (this.elementRef.nativeElement.contains(event.target)){
             this.isOpen = !this.isOpen;
         } else {
