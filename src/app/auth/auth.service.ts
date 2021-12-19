@@ -56,11 +56,13 @@ export class AuthService {
 
     autoLogin() {
         const userData = JSON.parse(localStorage.getItem('currentUser'));
-        const user = new User(userData.email, userData.id, userData._token, new Date(userData._expirationDate));
-        if (user.token) {
-            this.user.next(user);
-            const expirationDuration = new Date(userData._expirationDate).getTime() - new Date().getTime();
-            this.autoLogout(expirationDuration);
+        if (userData) {
+            const user = new User(userData.email, userData.id, userData._token, new Date(userData._expirationDate));
+            if (user.token) {
+                this.user.next(user);
+                const expirationDuration = new Date(userData._expirationDate).getTime() - new Date().getTime();
+                this.autoLogout(expirationDuration);
+            }
         }
     }
 
