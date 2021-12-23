@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 import { User } from "./user.model";
 
 export interface AuthResponse {
@@ -31,7 +32,7 @@ export class AuthService {
                 returnSecureToken: true
             },
             {
-               params: new HttpParams().append('key', 'AIzaSyCbAjwa4RwHRytAGqb45Jr12AyOC2YReGc')
+               params: new HttpParams().append('key', environment.firebaseAPIKey)
             }
         ).pipe(catchError(this.handleError), tap(resp => {
             this.authenticateUser(email, resp.localId, resp.idToken, +resp.expiresIn);
@@ -47,7 +48,7 @@ export class AuthService {
                 returnSecureToken: true
             },
             {
-                params: new HttpParams().append('key', 'AIzaSyCbAjwa4RwHRytAGqb45Jr12AyOC2YReGc')
+                params: new HttpParams().append('key', environment.firebaseAPIKey)
             }
         ).pipe(catchError(this.handleError), tap(resp => {
             this.authenticateUser(email, resp.localId, resp.idToken, +resp.expiresIn);
