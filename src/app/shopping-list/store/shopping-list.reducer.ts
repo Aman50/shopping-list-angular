@@ -1,11 +1,19 @@
 import { Ingredient } from "../../shared/ingredient.model";
 import * as ShoppingListActions from './shopping-list.actions';
 
-const initialState = {
+const initialState: state = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Oranges', 10),
-    ]
+    ],
+    editIngredient: null,
+    editIngredientIndex: -1
+}
+
+export interface state {
+    ingredients: Ingredient[];
+    editIngredient: Ingredient;
+    editIngredientIndex: number;
 }
 
 export function ShoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
@@ -21,25 +29,40 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
                 ingredients: [...state.ingredients, ...action.payload]
             };
         case ShoppingListActions.UPDATE_INGREDIENT:
-            const ingredient = state.ingredients[action.payload.index];
+            const ingredient = state.ingredients[state.editIngredientIndex];
             const newIngredient = {
                 ...ingredient,
-                ...action.payload.ingredient
+                ...action.payload
             };
             const ingredientArray = [...state.ingredients];
-            ingredientArray[action.payload.index] = newIngredient;
+            ingredientArray[state.editIngredientIndex] = newIngredient;
             return {
                 ...state,
-                ingredients: ingredientArray
+                ingredients: ingredientArray,
+                editIngredient: null,
+                editIngredientIndex: -1
             };
             // Embraces Immutability, creation of new objects, never modify old object and its properties.
         case ShoppingListActions.DELETE_INGREDIENT:
-
             return {
                 ...state,
                 ingredients: state.ingredients.filter((ingredient, index) => {
-                    return action.payload !== index;
-                })
+                    return state.editIngredientIndex !== index;
+                }),
+                editIngredient: null,
+                editIngredientIndex: -1
+            };
+        case ShoppingListActions.START_EDIT:
+            return {
+                ...state,
+                editIngredient: {...state.ingredients[action.payload]},
+                editIngredientIndex: action.payload
+            };
+        case ShoppingListActions.STOP_EDIT:
+            return {
+                ...state,
+                editIngredient: null,
+                editIngredientIndex: -1
             };
         default:
             console.log(action);

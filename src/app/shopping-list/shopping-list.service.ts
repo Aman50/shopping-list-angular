@@ -3,10 +3,11 @@ import { Store } from "@ngrx/store";
 import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
+import * as fromApp from '../store/app.reducer';
 @Injectable()
 export class ShoppingListService {
 
-    constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {}
+    constructor(private store: Store<fromApp.AppState>) {}
     ingredients: Array<Ingredient> = [
         new Ingredient('Apples', 5),
         new Ingredient('Oranges', 10),
@@ -29,10 +30,7 @@ export class ShoppingListService {
     }
 
     updateIngredient(ingredient: Ingredient, index: number) {
-        this.store.dispatch(new ShoppingListActions.UpdateIngredient({
-            ingredient: ingredient,
-            index: index
-        }));
+        this.store.dispatch(new ShoppingListActions.UpdateIngredient(ingredient));
         // this.ingredients[index] = ingredient;
         // this.emitIngredients.next(this.ingredients.slice());
     }
