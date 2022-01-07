@@ -1,11 +1,13 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
 import { Observable, Subscription } from "rxjs";
 import { ErrorModalComponent } from "../shared/error-modal/error-modal.component";
 import { PlaceholderDirective } from "../shared/placeholder/placeholder.directive";
 import { AuthResponse, AuthService } from "./auth.service";
-
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 @Component({
     'selector': 'app-auth',
     'templateUrl': './auth.component.html',
@@ -22,7 +24,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     appPlace: PlaceholderDirective;
 
 
-    constructor(private authService: AuthService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor(private authService: AuthService,
+         private router: Router, 
+         private componentFactoryResolver: ComponentFactoryResolver,
+         private store: Store<fromApp.AppState>) {}
 
     ngOnInit(): void {
         this.isLoginMode = false;
@@ -32,6 +37,14 @@ export class AuthComponent implements OnInit, OnDestroy {
             'email': new FormControl(null, [Validators.required, Validators.email]),
             'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
         });
+
+        this.store.select('auth').subscribe(authState => {
+            this.isLoading = authState.isLoading;
+            this.error = authState.error;
+            if (this.error) {
+                this.showErrorModal(this.error);
+            }
+        })
     }
 
     ngOnDestroy(): void {
@@ -51,18 +64,19 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.error = undefined;
         let callObs: Observable<AuthResponse>;
         if (this.isLoginMode) {
-            callObs = this.authService.login(email, password);
+            // callObs = this.authService.login(email, password);
+            this.store.dispatch(new AuthActions.StartLogin({email, password}));
         } else {
-            callObs = this.authService.signUp(email, password);
+            // callObs = this.authService.signUp(email, password);
         }
-        callObs.subscribe(resData => {
-            this.isLoading = false;
-            this.router.navigate(['/recipe-book']);
-        }, error => {
-            this.error = error;
-            this.isLoading = false;
-            this.showErrorModal(error);
-        });
+        // callObs.subscribe(resData => {
+        //     this.isLoading = false;
+        //     this.router.navigate(['/recipe-book']);
+        // }, error => {
+        //     this.error = error;
+        //     this.isLoading = false;
+        //     this.showErrorModal(error);
+        // });
         this.authForm.reset();
     }
 
