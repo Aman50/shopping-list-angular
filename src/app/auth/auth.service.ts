@@ -13,6 +13,7 @@ export class AuthService {
 
 
     setTimer(expirationDuration: number) {
+        console.log(expirationDuration);
         this.logoutTimer = setTimeout(() => {
             this.store.dispatch(new AuthActions.Logout());
         }, expirationDuration);

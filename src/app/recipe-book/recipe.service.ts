@@ -5,6 +5,7 @@ import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
 import * as fromApp from '../store/app.reducer';
+import * as RecipesAction from '../recipe-book/store/recipes.action';
 @Injectable()
 export class RecipeService {
 
@@ -15,8 +16,9 @@ export class RecipeService {
     constructor(private store: Store<fromApp.AppState> ) {}
 
     setRecipes(recipes: Recipe[]) {
-      this.recipes = recipes;
-      this.emitRecipes.next(this.recipes.slice());
+      this.store.dispatch(new RecipesAction.SetRecipes(recipes));
+      // this.recipes = recipes;
+      // this.emitRecipes.next(this.recipes.slice());
     }
 
     getRecipes() {

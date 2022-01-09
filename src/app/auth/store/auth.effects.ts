@@ -135,7 +135,9 @@ export class AuthEffects {
                 if (userData) {
                     const user = new User(userData.email, userData.id, userData._token, new Date(userData._expirationDate));
                     if (user.token) {
-                        this.authService.setTimer(+userData.expiresIn * 1000);
+                        const expiresIn = new Date(userData._expirationDate).getMilliseconds() - new Date().getMilliseconds();
+                        console.log(expiresIn);
+                        this.authService.setTimer(expiresIn * 1000);
                         return new AuthActions.AuthenticationSuccess(
                             {
                                 email: userData.email,
