@@ -62,6 +62,12 @@ export class EditRecipeComponent implements OnInit {
       });
     });
   }
+  this.recipeForm = new FormGroup({
+    name: new FormControl(recipeName, Validators.required),
+    imgPath: new FormControl(recipeURL, Validators.required),
+    description: new FormControl(recipeDescription, Validators.required),
+    ingredients: recipeIngredients
+  });
 }
 
   get ingredients(): FormArray {

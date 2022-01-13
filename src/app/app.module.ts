@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { RecipesEffects } from './recipe-book/store/recipes.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot(fromApp.AppActionReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipesEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production
     }),

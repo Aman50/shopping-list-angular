@@ -20,8 +20,9 @@ export class AuthService {
     }
 
     clearTimer() {
+        console.log("clearing");
         if (this.logoutTimer) {
-            this.logoutTimer = null;
+            clearTimeout(this.logoutTimer);
         }
     }
 }

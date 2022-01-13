@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from '../auth/store/auth.actions';
+import * as RecipesActions from '../recipe-book/store/recipes.actions';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout(): void {
     // this.authService.logOut();
+    console.log("onlogout");
     this.store.dispatch(new AuthActions.Logout());
   }
 
@@ -46,7 +48,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onFetchData(): void {
-    this.dataStorageService.fetchRecipes().subscribe();
+    // this.dataStorageService.fetchRecipes().subscribe();
+    this.store.dispatch(new RecipesActions.FetchRecipes());
   }
 
 }

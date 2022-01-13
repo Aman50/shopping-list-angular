@@ -5,7 +5,7 @@ import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
 import * as fromApp from '../store/app.reducer';
-import * as RecipesAction from '../recipe-book/store/recipes.action';
+import * as RecipesAction from './store/recipes.actions';
 @Injectable()
 export class RecipeService {
 
